@@ -1,10 +1,10 @@
 export class TodoClass {
-    name = '';
+    title = '';
     id = -1;
     isCompleted = false;
 
-    constructor(name) {
-        this.name = name;
+    constructor(title) {
+        this.title = title;
         this.id = Math.random() * Date.now();
     }
 }

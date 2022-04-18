@@ -1,30 +1,39 @@
-import { map } from 'rxjs';
+import { filter, map, take, tap } from 'rxjs';
 import { ObservableStore } from '@codewithdan/observable-store';
 
 import { storeActions } from './actions';
 import { TodoClass } from '../models/todo.model';
+import todoService from '../services/todo.service';
 
 class Store extends ObservableStore {
 
     constructor() {
-        const initialState = {
-            todos: []
-        };
         super({ trackStateHistory: true });
 
         this.todos$ = this.stateChanged.pipe(
+            filter(Boolean),
             map(state => {
                 return state.todos.filter(obj => !obj.isCompleted);
             }),
         );
 
         this.completed$ = this.stateChanged.pipe(
+            filter(Boolean),
             map(state => {
                 return state.todos.filter(obj => obj.isCompleted);
             }),
         );
 
-        this.setState(initialState, storeActions.INITIAL_STATE);
+        this.fetchTodos().subscribe();
+    }
+
+    fetchTodos() {
+        return todoService.fetchTodos().pipe(
+            take(1),
+            tap((todos) => {
+                this.setState({ todos }, storeActions.INITIAL_STATE);
+            })
+        )
     }
 
     addTodo(todoName) {

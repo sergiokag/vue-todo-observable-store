@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li v-for="todo in todos" :key="todo.id">
-      <p>{{ todo.name }}</p>
+      <p>{{ todo.title }}</p>
       <button type="button" @click="onTodoStatusUpdate(todo)">
         {{ todo.isCompleted ? "Completed" : "Not Completed" }}
       </button>

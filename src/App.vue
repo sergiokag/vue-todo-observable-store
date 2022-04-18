@@ -6,18 +6,12 @@
     </div>
     <div class="grid-item left-list-item">
       <TodoList :list="todoList" @status-update="onStatusUpdated"></TodoList>
-      <p>
-        {{ todoList }}
-      </p>
     </div>
     <div class="grid-item right-list-item">
       <TodoList
         :list="completedList"
         @status-update="onStatusUpdated"
       ></TodoList>
-      <p>
-        {{ completedList }}
-      </p>
     </div>
   </div>
 </template>
@@ -30,7 +24,7 @@ import { onMounted, onUnmounted, ref } from "vue";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
 
-// FacadeService
+// Services
 import facadeService from "./services/facade.service";
 
 export default {
