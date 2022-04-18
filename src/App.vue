@@ -2,7 +2,7 @@
   <h1 class="text-center">Todo List</h1>
   <div class="grid-container">
     <div class="grid-item form-item">
-      <TodoForm @add-todo="onAddTodo"></TodoForm>
+      <TodoForm @add-todo="onAddTodo" @clear-lists="onClearLists"></TodoForm>
     </div>
     <div class="grid-item left-list-item">
       <TodoList :list="todoList" @status-update="onStatusUpdated"></TodoList>
@@ -42,35 +42,39 @@ export default {
   setup() {
     const todoList = ref([]);
     const completedList = ref([]);
-    let subscription;
+    let subscription1;
+    let subscription2;
 
     onMounted(() => {
-      // TODO refactor
-      subscription = facadeService.stateChanged$.subscribe((state) => {
-        completedList.value = state.todos.filter((obj) => obj.isCompleted);
-        todoList.value = state.todos.filter((obj) => !obj.isCompleted);
+      subscription1 = facadeService.selectTodos$.subscribe((list) => {
+        todoList.value = list;
+      });
+
+      subscription2 = facadeService.completed$.subscribe((list) => {
+        completedList.value = list;
       });
     });
 
     onUnmounted(() => {
-      if (subscription) {
-        subscription.unsubscribe();
+      if (subscription1) {
+        subscription1.unsubscribe();
+      }
+
+      if (subscription2) {
+        subscription2.unsubscribe();
       }
     });
 
     const onAddTodo = ($event) => {
-      // TODO refactor
-      const todoItem = {
-        id: Math.random() * Date.now(),
-        name: $event,
-        isCompleted: false,
-      };
-
-      facadeService.addTodo(todoItem);
+      facadeService.addTodo($event);
     };
 
     const onStatusUpdated = ($event) => {
       facadeService.updateList($event);
+    };
+
+    const onClearLists = () => {
+      facadeService.clearLists();
     };
 
     return {
@@ -78,6 +82,7 @@ export default {
       completedList,
       onAddTodo,
       onStatusUpdated,
+      onClearLists,
     };
   },
 };
@@ -87,25 +92,17 @@ export default {
 .text-center {
   text-align: center;
 }
+
 .form-item {
-  grid-area: form;
-}
-
-.left-list-item {
-  grid-area: leftlist;
-}
-
-.right-list-item {
-  grid-area: rightlist;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 .grid-container {
   display: grid;
   gap: 15px;
-  grid-template-areas:
-    "form form form form"
-    "leftlist leftlist rightlist rightlist"
-    "leftlist leftlist rightlist rightlist";
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr 200px;
   justify-items: center;
 }
 </style>

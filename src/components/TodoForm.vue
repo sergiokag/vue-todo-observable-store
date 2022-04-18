@@ -1,8 +1,14 @@
 <template>
   <div>
-    <input type="text" v-model.lazy="todoName" />
-    <button type="button" @click="onBtnAddClick(todoName)">Add</button>
-    <button type="reset">Reset</button>
+    <input type="text" v-model="todoName" />
+    <button
+      type="button"
+      :disabled="!todoName"
+      @click="onBtnAddClick(todoName)"
+    >
+      Add
+    </button>
+    <button type="button" @click="onBtnClearClick()">Clear Lists</button>
   </div>
 </template>
 
@@ -11,15 +17,21 @@ import { ref } from "vue";
 
 export default {
   name: "TodoForm",
-  emits: ["add-todo"],
+  emits: ["add-todo", "clear-lists"],
   setup(_, { emit }) {
     const todoName = ref("");
     const onBtnAddClick = (todoName) => {
       emit("add-todo", todoName);
+      todoName.value = "";
+    };
+    const onBtnClearClick = () => {
+      emit("clear-lists");
+      todoName.value = "";
     };
     return {
       todoName,
       onBtnAddClick,
+      onBtnClearClick,
     };
   },
 };

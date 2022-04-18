@@ -3,10 +3,12 @@ import store from '../store/configureStore';
 class FacadeService {
     constructor() {
         this.stateChanged$ = store.stateChanged;
+        this.selectTodos$ = store.todos$;
+        this.completed$ = store.completed$;
     }
 
-    addTodo(todo) {
-        store.addTodo(todo);
+    addTodo(todoName) {
+        store.addTodo(todoName);
     }
 
     getTodos() {
@@ -17,6 +19,9 @@ class FacadeService {
         store.updateTodo(todo);
     }
 
+    clearLists() {
+        store.clearLists();
+    }
 }
 
 const facadeService = new FacadeService();
