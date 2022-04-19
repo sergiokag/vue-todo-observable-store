@@ -1,26 +1,29 @@
-import store from '../store/configureStore';
+import configureStore from '../store/configureStore';
 
 class FacadeService {
+    #store;
+
     constructor() {
-        this.stateChanged$ = store.stateChanged;
-        this.selectTodos$ = store.todos$;
-        this.completed$ = store.completed$;
+        this.#store = configureStore();
+        this.stateChanged$ = this.#store.stateChanged;
+        this.selectTodos$ = this.#store.todos$;
+        this.completed$ = this.#store.completed$;
     }
 
     addTodo(todoName) {
-        store.addTodo(todoName);
+        this.#store.addTodo(todoName);
     }
 
     getTodos() {
-        return store.getTodos();
+        return this.#store.getTodos();
     }
 
     updateList(todo) {
-        store.updateTodo(todo);
+        this.#store.updateTodo(todo);
     }
 
     clearLists() {
-        store.clearLists();
+        this.#store.clearLists();
     }
 }
 

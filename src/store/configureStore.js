@@ -67,6 +67,6 @@ class Store extends ObservableStore {
     }
 }
 
-const store = new Store();
+const configureStore = () => new Store();
 
-export default store;
+export default configureStore;
