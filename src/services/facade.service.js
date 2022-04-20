@@ -1,10 +1,11 @@
-import configureStore from '../store/configureStore';
+import configureStore from "../store/configureStore";
+import todoService from "./todo.service";
 
 class FacadeService {
     #store;
 
-    constructor() {
-        this.#store = configureStore();
+    constructor(store) {
+        this.#store = store;
         this.stateChanged$ = this.#store.stateChanged;
         this.selectTodos$ = this.#store.todos$;
         this.completed$ = this.#store.completed$;
@@ -27,6 +28,7 @@ class FacadeService {
     }
 }
 
-const facadeService = new FacadeService();
+const store = configureStore(todoService);
+const facadeService = new FacadeService(store);
 
 export default facadeService;

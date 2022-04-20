@@ -3,12 +3,13 @@ import { ObservableStore } from '@codewithdan/observable-store';
 
 import { storeActions } from './actions';
 import { TodoClass } from '../models/todo.model';
-import todoService from '../services/todo.service';
 
 class Store extends ObservableStore {
+    #todoService;
 
-    constructor() {
+    constructor(todoService) {
         super({ trackStateHistory: true });
+        this.#todoService = todoService;
 
         this.todos$ = this.stateChanged.pipe(
             filter(Boolean),
@@ -28,7 +29,7 @@ class Store extends ObservableStore {
     }
 
     fetchTodos() {
-        return todoService.fetchTodos().pipe(
+        return this.#todoService.fetchTodos().pipe(
             take(1),
             tap((todos) => {
                 this.setState({ todos }, storeActions.INITIAL_STATE);
@@ -39,7 +40,7 @@ class Store extends ObservableStore {
     addTodo(todoName) {
         const todoItem = new TodoClass(todoName);
         const state = this.getState();
-        const todos = [...state.todos, todoItem];
+        const todos = [todoItem, ...state.todos];
         this.setState({ todos }, storeActions.ADD_TODO);
     }
 
@@ -67,6 +68,6 @@ class Store extends ObservableStore {
     }
 }
 
-const configureStore = () => new Store();
+const configureStore = (todoService) => new Store(todoService);
 
 export default configureStore;
