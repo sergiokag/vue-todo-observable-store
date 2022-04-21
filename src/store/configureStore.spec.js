@@ -3,25 +3,26 @@ import todoService from "../services/todo.service";
 import { of } from "rxjs";
 
 describe('Store', () => {
-    let store;
-    let mockFetchTodos;
-
-    beforeEach(() => {
-        // Arrange
-        const resp = [{ id: 0, title: 'test todo', isCompleted: false }];
-        mockFetchTodos = jest.spyOn(todoService, "fetchTodos").mockImplementation(() => of(resp));
-        // Act
-        store = configureStore(todoService);
-    });
-
     it('should be created successfully', () => {
         // Arrange
-        const length = store.getState().todos.length;
+        // Act
+        const store = configureStore(todoService);
 
         // Assert
         expect(store).toBeTruthy();
+    });
+
+    it('should have one list item in the store', () => {
+        // Arrange
+        const resp = [{ id: 0, title: 'test todo', isCompleted: false }];
+        const mockFetchTodos = jest.spyOn(todoService, "fetchTodos").mockImplementation(() => of(resp));
+
+        // Act
+        const store = configureStore(todoService);
+
+        // Assert
         expect(mockFetchTodos).toHaveBeenCalled();
-        expect(length).toBe(1);
+        expect(store.getState().todos.length).toBe(1);
     });
 
     afterEach(() => {
