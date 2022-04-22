@@ -12,7 +12,7 @@ describe('Store', () => {
         expect(store).toBeTruthy();
     });
 
-    it('should have one list item in the store', () => {
+    it('should have one list item in the store', (done) => {
         // Arrange
         const resp = [{ id: 0, title: 'test todo', isCompleted: false }];
         jest.spyOn(todoService, "fetchTodos").mockImplementation(() => of(resp));
