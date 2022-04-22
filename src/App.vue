@@ -40,6 +40,8 @@ export default {
     let subscription2;
 
     onMounted(() => {
+      facadeService.fetchTodos().subscribe();
+
       subscription1 = facadeService.selectTodos$.subscribe((list) => {
         todoList.value = list;
       });

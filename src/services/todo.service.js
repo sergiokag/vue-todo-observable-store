@@ -5,8 +5,8 @@ import { TodoClass } from "../models/todo.model";
 class TodoService {
     fetchTodos() {
         return ajax("https://jsonplaceholder.typicode.com/todos").pipe(
-            map(userResponse => {
-                return userResponse.response.splice(0, 10)
+            map(({ response }) => {
+                return response.splice(0, 10)
             }),
             map((list) => {
                 return list.map(obj => ({

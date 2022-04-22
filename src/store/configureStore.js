@@ -24,8 +24,6 @@ class Store extends ObservableStore {
                 return state.todos.filter(obj => obj.isCompleted);
             }),
         );
-
-        this.fetchTodos().subscribe();
     }
 
     fetchTodos() {

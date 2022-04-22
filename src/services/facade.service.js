@@ -19,6 +19,10 @@ class FacadeService {
         return this.#store.getTodos();
     }
 
+    fetchTodos() {
+        return this.#store.fetchTodos();
+    }
+
     updateList(todo) {
         this.#store.updateTodo(todo);
     }
