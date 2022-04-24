@@ -30,4 +30,4 @@ describe('Store', () => {
     afterEach(() => {
         jest.restoreAllMocks();
     })
-})
+});

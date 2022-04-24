@@ -1,5 +1,4 @@
-import configureStore from "../store/configureStore";
-import todoService from "./todo.service";
+import store from "../store";
 
 class FacadeService {
     #store;
@@ -32,7 +31,6 @@ class FacadeService {
     }
 }
 
-const store = configureStore(todoService);
 const facadeService = new FacadeService(store);
 
 export default facadeService;
