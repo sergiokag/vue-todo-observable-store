@@ -20,8 +20,8 @@ export default {
   emits: ["add-todo", "clear-lists"],
   setup(_, { emit }) {
     const todoName = ref("");
-    const onBtnAddClick = (todoName) => {
-      emit("add-todo", todoName);
+    const onBtnAddClick = (todoNameText) => {
+      emit("add-todo", todoNameText);
       todoName.value = "";
     };
     const onBtnClearClick = () => {

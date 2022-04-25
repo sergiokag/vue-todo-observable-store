@@ -62,7 +62,7 @@ class Store extends ObservableStore {
 
     clearLists() {
         const todos = [];
-        this.setState({ todos }, storeActions.ClEAR_LISTS);
+        this.setState({ todos }, storeActions.CLEAR_LISTS);
     }
 }
 

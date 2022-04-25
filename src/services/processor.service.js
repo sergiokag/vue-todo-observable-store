@@ -1,6 +1,6 @@
 import store from "../store";
 
-class FacadeService {
+class ProcessorService {
     #store;
 
     constructor(store) {
@@ -31,6 +31,6 @@ class FacadeService {
     }
 }
 
-const facadeService = new FacadeService(store);
+const processorService = new ProcessorService(store);
 
-export default facadeService;
+export default processorService;

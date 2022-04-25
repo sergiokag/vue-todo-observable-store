@@ -25,7 +25,7 @@ import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
 
 // Services
-import facadeService from "./services/facade.service";
+import processorService from "./services/processor.service";
 
 export default {
   name: "App",
@@ -40,13 +40,13 @@ export default {
     let subscription2;
 
     onMounted(() => {
-      facadeService.fetchTodos().subscribe();
+      processorService.fetchTodos().subscribe();
 
-      subscription1 = facadeService.selectTodos$.subscribe((list) => {
+      subscription1 = processorService.selectTodos$.subscribe((list) => {
         todoList.value = list;
       });
 
-      subscription2 = facadeService.completed$.subscribe((list) => {
+      subscription2 = processorService.completed$.subscribe((list) => {
         completedList.value = list;
       });
     });
@@ -62,15 +62,15 @@ export default {
     });
 
     const onAddTodo = ($event) => {
-      facadeService.addTodo($event);
+      processorService.addTodo($event);
     };
 
     const onStatusUpdated = ($event) => {
-      facadeService.updateList($event);
+      processorService.updateList($event);
     };
 
     const onClearLists = () => {
-      facadeService.clearLists();
+      processorService.clearLists();
     };
 
     return {
